@@ -1,3 +1,5 @@
 .idea
 target
 .exercism
+.gradle
+build
