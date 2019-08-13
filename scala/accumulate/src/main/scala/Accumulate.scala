@@ -10,11 +10,11 @@ class Accumulate {
     def loop(list: List[A], f: (A) => B, acc: List[B]): List[B] = {
       list match {
         case Nil => acc
-        case head :: tail => loop(tail, f, acc :+ f(head))
+        case head :: tail => loop(tail, f, f(head) :: acc)
       }
     }
 
-    loop(list, f, Nil)
+    loop(list, f, Nil).reverse
   }
 
 }
