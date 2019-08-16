@@ -9,7 +9,7 @@ object Hamming {
   }
 
   private def getHammingDistance(leftString: String, rightString: String): Int = {
-    leftString.zip(rightString).map { case (l, r) => if (l == r) 0 else 1 }.sum
+    leftString.zip(rightString).count { case (l, r) => l != r }
   }
 
 }
