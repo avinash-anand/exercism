@@ -15,7 +15,7 @@ object PerfectNumbers {
   private def aliquotSum(number: Int): Int = factorsOfNumberExceptSelf(number).sum
 
   private def factorsOfNumberExceptSelf(n: Int): Seq[Int] = {
-    1 until n filter (x => n % x == 0)
+    1 to (n / 2) filter (x => n % x == 0)
   }
 
 }
