@@ -1,4 +1,5 @@
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 import static java.util.Objects.nonNull;
 
@@ -17,14 +18,18 @@ class Hamming {
         }
     }
 
+    private void throwIllegalArgumentException(String msg) {
+        throw new IllegalArgumentException(msg);
+    }
+
     private void validateArguments(String leftStrand, String rightStrand) {
         if (leftStrand.length() != rightStrand.length()) {
             if (leftStrand.isEmpty()) {
-                throw new IllegalArgumentException("left strand must not be empty.");
+                throwIllegalArgumentException("left strand must not be empty.");
             } else if (rightStrand.isEmpty()) {
-                throw new IllegalArgumentException("right strand must not be empty.");
+                throwIllegalArgumentException("right strand must not be empty.");
             } else {
-                throw new IllegalArgumentException("leftStrand and rightStrand must be of equal length.");
+                throwIllegalArgumentException("leftStrand and rightStrand must be of equal length.");
             }
         }
     }
@@ -33,15 +38,11 @@ class Hamming {
         if (Objects.equals(leftStrand, rightStrand)) {
             return 0;
         } else {
-            char[] leftStrandArray = leftStrand.toCharArray();
-            char[] rightStrandArray = rightStrand.toCharArray();
-            int hammingDistance = 0;
-            for (int i = 0; i < leftStrandArray.length; i++) {
-                if (leftStrandArray[i] != rightStrandArray[i]) {
-                    hammingDistance += 1;
-                }
-            }
-            return hammingDistance;
+            return IntStream
+                    .range(0, leftStrand.length())
+                    .reduce(0,
+                            (acc, index) -> (leftStrand.charAt(index) != rightStrand.charAt(index)) ? acc + 1 : acc
+                    );
         }
     }
 
