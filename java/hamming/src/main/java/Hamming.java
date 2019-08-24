@@ -1,7 +1,8 @@
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 class Hamming {
 
@@ -9,28 +10,26 @@ class Hamming {
     private final String rightStrand;
 
     Hamming(String leftStrand, String rightStrand) {
-        if (nonNull(leftStrand) && nonNull(rightStrand)) {
-            validateArguments(leftStrand, rightStrand);
-            this.leftStrand = leftStrand;
-            this.rightStrand = rightStrand;
-        } else {
-            throw new IllegalArgumentException("leftStrand or rightStrand can not be null.");
-        }
+        illegalArgumentsError(leftStrand, rightStrand).ifPresent(msg -> {
+            throw new IllegalArgumentException(msg);
+        });
+        this.leftStrand = leftStrand;
+        this.rightStrand = rightStrand;
     }
 
-    private void throwIllegalArgumentException(String msg) {
-        throw new IllegalArgumentException(msg);
-    }
-
-    private void validateArguments(String leftStrand, String rightStrand) {
-        if (leftStrand.length() != rightStrand.length()) {
+    private Optional<String> illegalArgumentsError(String leftStrand, String rightStrand) {
+        if (isNull(leftStrand) || isNull(rightStrand)) {
+            return Optional.of("leftStrand or rightStrand can not be null.");
+        } else if (leftStrand.length() != rightStrand.length()) {
             if (leftStrand.isEmpty()) {
-                throwIllegalArgumentException("left strand must not be empty.");
+                return Optional.of("left strand must not be empty.");
             } else if (rightStrand.isEmpty()) {
-                throwIllegalArgumentException("right strand must not be empty.");
+                return Optional.of("right strand must not be empty.");
             } else {
-                throwIllegalArgumentException("leftStrand and rightStrand must be of equal length.");
+                return Optional.of("leftStrand and rightStrand must be of equal length.");
             }
+        } else {
+            return Optional.empty();
         }
     }
 
