@@ -1,21 +1,14 @@
 import Bearing._
 
-import scala.annotation.tailrec
-
 case class Robot(bearing: Bearing, coordinates: (Int, Int)) {
 
-  def simulate(commands: String): Robot = {
-
-    @tailrec
-    def loop(commands: List[Char], result: Robot): Robot = commands match {
-      case Nil => result
-      case head :: tail if head == 'L' => loop(tail, result.turnLeft)
-      case head :: tail if head == 'R' => loop(tail, result.turnRight)
-      case head :: tail if head == 'A' => loop(tail, result.advance)
-    }
-
-    loop(commands.toList, this)
+  def simulate(commands: String): Robot = commands.foldLeft(this) { (acc, command) =>
+    if (command == 'L') acc.turnLeft
+    else if (command == 'R') acc.turnRight
+    else if (command == 'A') acc.advance
+    else acc
   }
+
 
   def turnRight: Robot = this.bearing match {
     case North => this.copy(bearing = East)
