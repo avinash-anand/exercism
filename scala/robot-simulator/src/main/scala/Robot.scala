@@ -10,25 +10,25 @@ case class Robot(bearing: Bearing, coordinates: (Int, Int)) {
   }
 
 
-  def turnRight: Robot = this.bearing match {
-    case North => this.copy(bearing = East)
-    case South => this.copy(bearing = West)
-    case East => this.copy(bearing = South)
-    case West => this.copy(bearing = North)
+  def turnRight: Robot = bearing match {
+    case North => copy(bearing = East)
+    case South => copy(bearing = West)
+    case East => copy(bearing = South)
+    case West => copy(bearing = North)
   }
 
-  def turnLeft: Robot = this.bearing match {
-    case North => this.copy(bearing = West)
-    case South => this.copy(bearing = East)
-    case East => this.copy(bearing = North)
-    case West => this.copy(bearing = South)
+  def turnLeft: Robot = bearing match {
+    case North => copy(bearing = West)
+    case South => copy(bearing = East)
+    case East => copy(bearing = North)
+    case West => copy(bearing = South)
   }
 
-  def advance: Robot = this.bearing match {
-    case North => this.copy(coordinates = incrementY(this.coordinates))
-    case South => this.copy(coordinates = decrementY(this.coordinates))
-    case East => this.copy(coordinates = incrementX(this.coordinates))
-    case West => this.copy(coordinates = decrementX(this.coordinates))
+  def advance: Robot = bearing match {
+    case North => copy(coordinates = incrementY(coordinates))
+    case South => copy(coordinates = decrementY(coordinates))
+    case East => copy(coordinates = incrementX(coordinates))
+    case West => copy(coordinates = decrementX(coordinates))
   }
 
   private def incrementX(coordinates: (Int, Int)): (Int, Int) = (coordinates._1 + 1, coordinates._2)
