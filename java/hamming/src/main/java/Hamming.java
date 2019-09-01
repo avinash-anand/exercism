@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
 
 import static java.util.Objects.isNull;
 
-class Hamming {
+public class Hamming {
 
     private final String leftStrand;
     private final String rightStrand;
@@ -39,9 +39,8 @@ class Hamming {
         } else {
             return IntStream
                     .range(0, leftStrand.length())
-                    .reduce(0,
-                            (acc, index) -> (leftStrand.charAt(index) != rightStrand.charAt(index)) ? acc + 1 : acc
-                    );
+                    .filter(index -> leftStrand.charAt(index) != rightStrand.charAt(index))
+                    .reduce(0, (acc, i) -> acc + 1);
         }
     }
 
