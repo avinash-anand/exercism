@@ -37,10 +37,10 @@ public class Hamming {
         if (Objects.equals(leftStrand, rightStrand)) {
             return 0;
         } else {
-            return IntStream
+            return (int) IntStream
                     .range(0, leftStrand.length())
                     .filter(index -> leftStrand.charAt(index) != rightStrand.charAt(index))
-                    .reduce(0, (acc, i) -> acc + 1);
+                    .count();
         }
     }
 
