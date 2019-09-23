@@ -1,29 +1,17 @@
-import scala.annotation.tailrec
+
 
 object SecretHandshake {
 
+  private def shouldReverse(n: Int): Boolean = (n & 16) != 0
+
+  private val CommandMapping = Map(1 -> "wink", 2 -> "double blink", 4 -> "close your eyes", 8 -> "jump")
+
   def commands(i: Int): List[String] = {
-    require(i < 32, "Secret handshake not defined for int greater than 31")
-    val binaryRepresentation = i.toBinaryString.toInt
-
-    def getCommands(binaryRep: Int): List[String] = {
-      if (binaryRep >= 10000) {
-        loop(binaryRep - 10000, Nil).reverse
-      } else {
-        loop(binaryRep, Nil)
-      }
-    }
-
-    @tailrec
-    def loop(binaryRep: Int, acc: List[String]): List[String] = {
-      if (binaryRep >= 1000) loop(binaryRep - 1000, "jump" :: acc)
-      else if (binaryRep >= 100) loop(binaryRep - 100, "close your eyes" :: acc)
-      else if (binaryRep >= 10) loop(binaryRep - 10, "double blink" :: acc)
-      else if (binaryRep >= 1) loop(binaryRep - 1, "wink" :: acc)
-      else acc
-    }
-
-    getCommands(binaryRepresentation)
+    val result = CommandMapping.toList
+      .filter { case (command, _) => (command & i) != 0 }
+      .map { case (_, value) => value }
+    if (shouldReverse(i)) result.reverse
+    else result
   }
 
 }
