@@ -1,6 +1,5 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 class Gigasecond {
 
@@ -8,7 +7,7 @@ class Gigasecond {
     private final LocalDateTime dateTime;
 
     Gigasecond(LocalDate moment) {
-        dateTime = LocalDateTime.of(moment, LocalTime.MIDNIGHT).plusSeconds(GIGA_SECOND);
+        this(moment.atStartOfDay());
     }
 
     Gigasecond(LocalDateTime moment) {
