@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -16,38 +17,19 @@ class Scrabble {
     int getScore() {
         char[] characters = word.toCharArray();
         return IntStream.range(0, characters.length)
-                .reduce(0,
-                        (accumulator, index) -> accumulator + letterValues.getOrDefault(characters[index], 0));
+                .map(index -> letterValues.getOrDefault(characters[index], 0))
+                .sum();
     }
 
     private static Map<Character, Integer> prepareLetterValues() {
         Map<Character, Integer> letterValueMap = new HashMap<>();
-        letterValueMap.put('A', 1);
-        letterValueMap.put('E', 1);
-        letterValueMap.put('I', 1);
-        letterValueMap.put('O', 1);
-        letterValueMap.put('U', 1);
-        letterValueMap.put('L', 1);
-        letterValueMap.put('N', 1);
-        letterValueMap.put('R', 1);
-        letterValueMap.put('S', 1);
-        letterValueMap.put('T', 1);
-        letterValueMap.put('D', 2);
-        letterValueMap.put('G', 2);
-        letterValueMap.put('B', 3);
-        letterValueMap.put('C', 3);
-        letterValueMap.put('M', 3);
-        letterValueMap.put('P', 3);
-        letterValueMap.put('F', 4);
-        letterValueMap.put('H', 4);
-        letterValueMap.put('V', 4);
-        letterValueMap.put('W', 4);
-        letterValueMap.put('Y', 4);
+        Arrays.asList('A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T').forEach(ch -> letterValueMap.put(ch, 1));
+        Arrays.asList('D', 'G').forEach(ch -> letterValueMap.put(ch, 2));
+        Arrays.asList('B', 'C', 'M', 'P').forEach(ch -> letterValueMap.put(ch, 3));
+        Arrays.asList('F', 'H', 'V', 'W', 'Y').forEach(ch -> letterValueMap.put(ch, 4));
         letterValueMap.put('K', 5);
-        letterValueMap.put('J', 8);
-        letterValueMap.put('X', 8);
-        letterValueMap.put('Q', 10);
-        letterValueMap.put('Z', 10);
+        Arrays.asList('J', 'X').forEach(ch -> letterValueMap.put(ch, 8));
+        Arrays.asList('Q', 'Z').forEach(ch -> letterValueMap.put(ch, 10));
         return letterValueMap;
     }
 
