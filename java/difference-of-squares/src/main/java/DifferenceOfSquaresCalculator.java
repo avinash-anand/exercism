@@ -3,7 +3,7 @@ import java.util.stream.IntStream;
 class DifferenceOfSquaresCalculator {
 
     int computeSquareOfSumTo(int input) {
-        return squareOf(IntStream.rangeClosed(1, input).sum());
+        return squareOf(sumOfConsecutiveNumbers(input));
     }
 
     int computeSumOfSquaresTo(int input) {
@@ -18,6 +18,10 @@ class DifferenceOfSquaresCalculator {
 
     private int squareOf(int number) {
         return number * number;
+    }
+
+    private int sumOfConsecutiveNumbers(int number) {
+        return (number * (number + 1)) / 2;
     }
 
 }
