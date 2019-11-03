@@ -5,7 +5,7 @@ class DifferenceOfSquaresCalculator {
     }
 
     int computeSumOfSquaresTo(int input) {
-        return sumOfConsecutiveNumbers(input) * (2 * input + 1) / 3;
+        return input * (input + 1) * (2 * input + 1) / 6;
     }
 
     int computeDifferenceOfSquares(int input) {
